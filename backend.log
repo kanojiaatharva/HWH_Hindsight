@@ -1,0 +1,7 @@
+INFO:     Started server process [37688]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+Loaded 4 incidents from seed data.
+INFO:     127.0.0.1:57167 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61962 - "GET /api/health HTTP/1.1" 200 OK

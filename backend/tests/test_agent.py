@@ -1,9 +1,16 @@
 import pytest
 from fastapi.testclient import TestClient
-from main import app
+from main import app, incidents_db
 from models import IncidentReport, IncidentFeedback
+from seed_data import load_seed_data
 
 client = TestClient(app)
+
+def setup_module():
+    """Load seed data before running tests"""
+    global incidents_db
+    incidents_db.clear()
+    incidents_db.extend(load_seed_data())
 
 def test_get_incidents():
     response = client.get("/api/incidents")
@@ -21,10 +28,13 @@ def test_diagnose_memory_enabled():
     response = client.post("/api/diagnose", json=report)
     assert response.status_code == 200
     data = response.json()
-    assert "pattern_match" in data
-    assert "recommended_fix" in data
+    # Response wraps diagnosis in a "diagnosis" field
+    assert "diagnosis" in data
+    diagnosis = data["diagnosis"]
+    assert "pattern_match" in diagnosis
+    assert "recommended_fix" in diagnosis
     # When memory is enabled, the mock fallback (or groq) returns failed approaches
-    assert "failed_approaches" in data
+    assert "failed_approaches" in diagnosis
 
 def test_diagnose_memory_disabled():
     report = {
@@ -35,7 +45,10 @@ def test_diagnose_memory_disabled():
     response = client.post("/api/diagnose", json=report)
     assert response.status_code == 200
     data = response.json()
-    assert "pattern_match" in data
+    # Response wraps diagnosis in a "diagnosis" field
+    assert "diagnosis" in data
+    diagnosis = data["diagnosis"]
+    assert "pattern_match" in diagnosis
 
 def test_feedback_loop():
     feedback = {
