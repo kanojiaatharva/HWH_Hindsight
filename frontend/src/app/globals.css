@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+}
+
+:root {
+  --background: #0f172a; /* Tailwind slate-900 */
+  --foreground: #f8fafc; /* Tailwind slate-50 */
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
