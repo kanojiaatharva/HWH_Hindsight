@@ -1,7 +1,5 @@
 <div align="center">
-
-# 🧠 Incident Déjà Vu
-
+  
 **An AI incident responder that learns from every outage, turning yesterday's failed approaches into today's immediate fixes.**
 
 [![CI](https://github.com/kanojiaatharva/HWH_Hindsight/actions/workflows/ci.yml/badge.svg)](https://github.com/kanojiaatharva/HWH_Hindsight/actions)
