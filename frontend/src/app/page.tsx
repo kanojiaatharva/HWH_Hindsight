@@ -20,7 +20,7 @@ export default function Dashboard() {
 
   const fetchIncidents = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/incidents");
+      const res = await axios.get("http://localhost:8001/api/incidents");
       setIncidents(res.data);
       const active = res.data.find((i: any) => i.status === "active");
       if (active) setActiveIncident(active);
@@ -29,8 +29,22 @@ export default function Dashboard() {
     }
   };
 
+  const seedDemoMemory = async () => {
+    try {
+      const res = await axios.post("http://localhost:8001/api/demo/seed");
+      alert("Demo memories seeded: " + res.data.message);
+    } catch (e) {
+      console.error(e);
+      alert("Failed to seed demo memories");
+    }
+  };
+
   const resetDemo = async () => {
-    // Basic reload for MVP demo to reset client state. Backend restart handles DB reset.
+    try {
+      await axios.post("http://localhost:8001/api/demo/reset");
+    } catch (e) {
+      console.error(e);
+    }
     setDiagnosis(null);
     setReportText("");
     setFeedback("");
@@ -42,7 +56,7 @@ export default function Dashboard() {
     setLoading(true);
     setDiagnosis(null);
     try {
-      const res = await axios.post("http://localhost:8000/api/diagnose", {
+      const res = await axios.post("http://localhost:8001/api/diagnose", {
         description: reportText,
         services: ["prod-api"],
         memory_enabled: memoryEnabled
@@ -58,7 +72,7 @@ export default function Dashboard() {
   const handleFeedback = async (isCorrect: boolean) => {
     setFeedbackSubmitting(true);
     try {
-      await axios.post("http://localhost:8000/api/feedback", {
+      await axios.post("http://localhost:8001/api/feedback", {
         incident_id: activeIncident?.id || "INC-DEMO",
         is_correct: isCorrect,
         correction: feedback
@@ -97,6 +111,9 @@ export default function Dashboard() {
         <div className="p-4 border-t border-slate-800 space-y-3">
           <button onClick={resetDemo} className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 rounded text-sm text-slate-300 transition">
             <RotateCcw className="w-4 h-4" /> Reset Demo
+          </button>
+          <button onClick={seedDemoMemory} className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm text-slate-400 transition">
+            <FileText className="w-4 h-4" /> Seed Memory
           </button>
           <div className="flex items-center gap-2 text-sm text-slate-500">
             <Settings className="w-4 h-4" /> Settings

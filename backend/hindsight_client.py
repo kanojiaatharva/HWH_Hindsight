@@ -72,9 +72,9 @@ class HindsightClient:
         import re
         # Remove potential API keys, tokens, passwords
         patterns = [
-            (r'(?i)(api[_-]?key|token|password|secret)["\\s:=]+["\\\'?][\\w\\-\\.]+', r'\\1=***REDACTED***'),
-            (r'\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b', r'***IP_REDACTED***'),
-            (r'Bearer\\s+[\\w\\-\\.]+', r'Bearer ***REDACTED***'),
+            (r'(?i)(api[_-]?key|token|password|secret)["\s:=]+["\']?[\w\-\.]+', r'\1=***REDACTED***'),
+            (r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', r'***IP_REDACTED***'),
+            (r'Bearer\s+[\w\-\.]+', r'Bearer ***REDACTED***'),
         ]
         sanitized = content
         for pattern, replacement in patterns:
