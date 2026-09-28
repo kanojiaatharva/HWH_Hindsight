@@ -1,6 +1,6 @@
 # Incident Déjà Vu
 
-**One-line pitch:** An AI incident responder that learns from every outage, turning yesterday's failed approaches into today's immediate fixes.
+An AI incident responder that learns from every outage, turning yesterday's failed approaches into today's immediate fixes.
 
 ## Problem
 When production breaks, on-call engineers often waste critical minutes trying the same "quick fixes" (like restarting a proxy) that their colleagues tried during a similar incident months ago, only to find they don't solve the root cause. Traditional runbooks get stale, and normal RAG chatbots just recite those stale runbooks.
